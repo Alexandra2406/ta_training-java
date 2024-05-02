@@ -15,6 +15,8 @@ public class PostResultsPage {
     WebElement header;
     @FindBy(xpath = "//div[@class='expire']\n")
     WebElement expire;
+    @FindBy(css = "div.left > a.btn.-small.h_800")
+    WebElement format;
     public PostResultsPage(WebDriver webDriver) {
         this.webDriver = webDriver;
         PageFactory.initElements(webDriver, this);
@@ -23,7 +25,7 @@ public class PostResultsPage {
         StringBuilder combinedText = new StringBuilder();
 
         for (WebElement paste : pastes) {
-            combinedText.append(paste.getText().trim()).append(" ");
+            combinedText.append(paste.getText().trim()).append("\n");
         }
 
         combinedText.deleteCharAt(combinedText.length() - 1);
@@ -34,5 +36,8 @@ public class PostResultsPage {
     }
     public String getExpiration(){
         return expire.getText().trim();
+    }
+    public String getFormat(){
+       return format.getText().trim();
     }
 }
