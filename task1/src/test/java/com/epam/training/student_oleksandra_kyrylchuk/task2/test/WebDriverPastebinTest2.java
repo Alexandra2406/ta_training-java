@@ -13,7 +13,7 @@ public class WebDriverPastebinTest2 {
     WebDriver driver;
 
     @Test(description = "Creating new paste")
-    public void createPaste(){
+    public void createAndCheckPaste(){
         driver = new FirefoxDriver();
         PastebinGoogleVignettePage googleVignettePage = new PastebinGoogleVignettePage(driver);
         googleVignettePage.openPage();
@@ -22,13 +22,31 @@ public class WebDriverPastebinTest2 {
                 "git reset $(git commit-tree HEAD^{tree} -m \"Legacy code\")\n" +
                 "git push origin master --force";
         String syntaxHighlighting = "Bash";
+        String expectedExpiration = "10 MIN";
         PostResultsPage postResultsPage = googleVignettePage.createNewPaste(paste, "10 Minutes", name, syntaxHighlighting);
-        assertEquals(paste, postResultsPage.getPastes());
-        assertEquals("10 MIN", postResultsPage.getExpiration());
-        assertEquals(name, postResultsPage.getNameOfHeader());
-        assertEquals(syntaxHighlighting, postResultsPage.getFormat());
+        verifyPastedContent(postResultsPage, paste);
+        verifyExpirationTime(postResultsPage, expectedExpiration);
+        verifyTitle(postResultsPage, name);
+        verifyFormat(postResultsPage, syntaxHighlighting);
+    }
+    private void verifyPastedContent(PostResultsPage postResultsPage, String expectedPaste) {
+        String actualPaste = postResultsPage.getPastes();
+        assertEquals(expectedPaste, actualPaste);
     }
 
+    private void verifyExpirationTime(PostResultsPage postResultsPage, String expectedExpiration) {
+        String actualExpiration = postResultsPage.getExpiration();
+        assertEquals(expectedExpiration, actualExpiration);
+    }
+
+    private void verifyTitle(PostResultsPage postResultsPage, String expectedTitle) {
+        String actualTitle = postResultsPage.getNameOfHeader();
+        assertEquals(expectedTitle, actualTitle);
+    }
+    private void verifyFormat(PostResultsPage postResultsPage, String syntaxHighlighting) {
+        String actualSyntaxHighlighting = postResultsPage.getFormat();
+        assertEquals(syntaxHighlighting, actualSyntaxHighlighting);
+    }
     @AfterMethod(alwaysRun = true)
     public void browserTearDown(){
         driver.quit();

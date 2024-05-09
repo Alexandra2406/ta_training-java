@@ -4,7 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7c603acc-3658-4421-9877-1ccfdf109711" name="Changes" comment="" />
+    <list default="true" id="7c603acc-3658-4421-9877-1ccfdf109711" name="Changes" comment="update task1 and task2">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task1/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/task1/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task1/src/test/java/com/epam/training/student_oleksandra_kyrylchuk/task1/test/WebDriverPastebinTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/task1/src/test/java/com/epam/training/student_oleksandra_kyrylchuk/task1/test/WebDriverPastebinTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task1/src/test/java/com/epam/training/student_oleksandra_kyrylchuk/task2/test/WebDriverPastebinTest2.java" beforeDir="false" afterPath="$PROJECT_DIR$/task1/src/test/java/com/epam/training/student_oleksandra_kyrylchuk/task2/test/WebDriverPastebinTest2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task1/src/test/java/pageobject_model/pagefactory/page/PastebinGoogleVignettePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/task1/src/test/java/pageobject_model/pagefactory/page/PastebinGoogleVignettePage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task1/src/test/java/pageobject_model/pagefactory/page/PostResultsPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/task1/src/test/java/pageobject_model/pagefactory/page/PostResultsPage.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,6 +26,9 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -24,12 +36,24 @@
       </MavenGeneralSettings>
     </option>
   </component>
+  <component name="ProjectId" id="2fvbnnTYhQ4j86E5u3Va8pOThSG" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/Admin/ta_training-java",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)"
+    "node.js.selected.package.tslint": "(autodetect)",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RunManager">
@@ -47,7 +71,35 @@
       </method>
     </configuration>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="7c603acc-3658-4421-9877-1ccfdf109711" name="Changes" comment="" />
+      <created>1714684667712</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1714684667712</updated>
+      <workItem from="1714684668702" duration="809000" />
+      <workItem from="1715159381436" duration="9674000" />
+    </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="update task1 and task2" />
+    <option name="LAST_COMMIT_MESSAGE" value="update task1 and task2" />
   </component>
 </project>

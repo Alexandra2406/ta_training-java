@@ -12,17 +12,33 @@ import static junit.framework.TestCase.assertEquals;
 public class WebDriverPastebinTest {
     WebDriver driver;
     @Test(description = "Creating new paste")
-    public void createPaste(){
+    public void createAndCheckPaste() throws InterruptedException {
         driver = new FirefoxDriver();
         PastebinGoogleVignettePage googleVignettePage = new PastebinGoogleVignettePage(driver);
         googleVignettePage.openPage();
         String name = "helloweb", paste = "Hello from WebDriver";
         PostResultsPage postResultsPage = googleVignettePage.createNewPaste(paste, "10 Minutes", name);
-
-        assertEquals(paste, postResultsPage.getPastes());
-        assertEquals("10 MIN", postResultsPage.getExpiration());
-        assertEquals(name, postResultsPage.getNameOfHeader());
+        Thread.sleep(10000);
+        verifyPastedContent(postResultsPage, paste);
+        verifyExpirationTime(postResultsPage, "10 MIN");
+        verifyTitle(postResultsPage, name);
     }
+
+    private void verifyPastedContent(PostResultsPage postResultsPage, String expectedPaste) {
+        String actualPaste = postResultsPage.getPastes();
+        assertEquals(expectedPaste, actualPaste);
+    }
+
+    private void verifyExpirationTime(PostResultsPage postResultsPage, String expectedExpiration) {
+        String actualExpiration = postResultsPage.getExpiration();
+        assertEquals(expectedExpiration, actualExpiration);
+    }
+
+    private void verifyTitle(PostResultsPage postResultsPage, String expectedTitle) {
+        String actualTitle = postResultsPage.getNameOfHeader();
+        assertEquals(expectedTitle, actualTitle);
+    }
+
     @AfterMethod(alwaysRun = true)
     public void browserTearDown(){
         driver.quit();

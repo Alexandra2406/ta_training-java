@@ -14,18 +14,17 @@ import java.util.List;
 public class PastebinGoogleVignettePage {
     private final String HOMEPAGE_URL = "https://pastebin.com/";
     WebDriver webDriver;
-    @FindBy(xpath = "//*[@id=\"postform-text\"]")
+    @FindBy(xpath = "//*[@id='postform-text']")
     private WebElement postFormText;
-    @FindBy(xpath = "//*[@id=\"select2-postform-expiration-container\"]")
+    @FindBy(xpath = "//*[@id='select2-postform-expiration-container']")
     private WebElement postFormExpirationContainer;
+    @FindBy(xpath = "//*[@id='select2-postform-expiration-results']")
     private WebElement expirationList;
-    @FindBy(xpath = "//*[@id=\"select2-postform-format-container\"]")
+    @FindBy(xpath = "//*[@id='select2-postform-format-container']")
     private WebElement postFormFormatContainer;
-    //@FindBy(css = ".select2-search--dropdown > input")
-    private WebElement formatInput;
-    @FindBy(xpath = "//*[@id=\"postform-name\"]")
+    @FindBy(xpath = "//*[@id='postform-name']")
     private WebElement postFormName;
-    @FindBy(xpath = "//*[@id=\"w0\"]/div[5]/div[1]/div[10]/button")
+    @FindBy(xpath = "//*[@id='w0']/div[5]/div[1]/div[10]/button")
     private WebElement createNewPasteButton;
 
 
@@ -36,15 +35,17 @@ public class PastebinGoogleVignettePage {
     public PastebinGoogleVignettePage openPage() {
         webDriver.get(HOMEPAGE_URL);
         PageFactory.initElements(webDriver, this);
-        new WebDriverWait(webDriver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.presenceOfElementLocated(By.id("postform-text")));
         return this;
     }
     private PastebinGoogleVignettePage postFormTextSendKeys(String paste){
+        new WebDriverWait(webDriver, Duration.ofSeconds(10)).
+                until(ExpectedConditions.visibilityOf(postFormText));
         postFormText.sendKeys(paste);
         return this;
     }
     private PastebinGoogleVignettePage postFormNameSendKeys(String name){
+        new WebDriverWait(webDriver, Duration.ofSeconds(10)).
+                until(ExpectedConditions.visibilityOf(postFormName));
         postFormName.sendKeys(name);
         return this;
     }
@@ -52,8 +53,8 @@ public class PastebinGoogleVignettePage {
         new WebDriverWait(webDriver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.elementToBeClickable(postFormExpirationContainer))
                 .click();
-        expirationList = new WebDriverWait(webDriver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"select2-postform-expiration-results\"]")));
+        new WebDriverWait(webDriver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.visibilityOf(expirationList));  //By.xpath("//*[@id='select2-postform-expiration-results']")));
         WebElement desiredOption = expirationList.findElement(By.xpath(".//li[text() = '" + expiration + "']"));
         desiredOption.click();
         return this;
@@ -62,8 +63,8 @@ public class PastebinGoogleVignettePage {
         new WebDriverWait(webDriver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.elementToBeClickable(postFormFormatContainer))
                 .click();
-        formatInput = new WebDriverWait(webDriver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"select2-postform-format-results\"]/li[2]/ul")));
+        new WebDriverWait(webDriver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='select2-postform-format-results']/li[2]/ul")));
         List<WebElement> listItems = new WebDriverWait(webDriver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(".//li[text() = '"+ syntaxHighlighting +"']")));
         listItems.get(0).click();
