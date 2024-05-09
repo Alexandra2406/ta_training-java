@@ -54,7 +54,7 @@ public class PastebinGoogleVignettePage {
                 .until(ExpectedConditions.elementToBeClickable(postFormExpirationContainer))
                 .click();
         new WebDriverWait(webDriver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.visibilityOf(expirationList));  //By.xpath("//*[@id='select2-postform-expiration-results']")));
+                .until(ExpectedConditions.visibilityOf(expirationList));
         WebElement desiredOption = expirationList.findElement(By.xpath(".//li[text() = '" + expiration + "']"));
         desiredOption.click();
         return this;

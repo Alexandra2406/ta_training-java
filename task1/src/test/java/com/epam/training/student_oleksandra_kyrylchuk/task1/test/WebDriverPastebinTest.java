@@ -11,14 +11,13 @@ import static junit.framework.TestCase.assertEquals;
 
 public class WebDriverPastebinTest {
     WebDriver driver;
-    @Test(description = "Creating new paste")
-    public void createAndCheckPaste() throws InterruptedException {
+    @Test(description = "Creating and checking new paste")
+    public void createAndCheckPaste() {
         driver = new FirefoxDriver();
         PastebinGoogleVignettePage googleVignettePage = new PastebinGoogleVignettePage(driver);
         googleVignettePage.openPage();
         String name = "helloweb", paste = "Hello from WebDriver";
         PostResultsPage postResultsPage = googleVignettePage.createNewPaste(paste, "10 Minutes", name);
-        Thread.sleep(10000);
         verifyPastedContent(postResultsPage, paste);
         verifyExpirationTime(postResultsPage, "10 MIN");
         verifyTitle(postResultsPage, name);

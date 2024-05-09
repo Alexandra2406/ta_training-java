@@ -12,7 +12,7 @@ import static junit.framework.TestCase.assertEquals;
 public class WebDriverPastebinTest2 {
     WebDriver driver;
 
-    @Test(description = "Creating new paste")
+    @Test(description = "Creating and checking new paste")
     public void createAndCheckPaste(){
         driver = new FirefoxDriver();
         PastebinGoogleVignettePage googleVignettePage = new PastebinGoogleVignettePage(driver);
