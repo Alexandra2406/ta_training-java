@@ -34,7 +34,6 @@ public class PastebinGoogleVignettePage {
     }
     public PastebinGoogleVignettePage openPage() {
         webDriver.get(HOMEPAGE_URL);
-        PageFactory.initElements(webDriver, this);
         return this;
     }
     private PastebinGoogleVignettePage postFormTextSendKeys(String paste){
