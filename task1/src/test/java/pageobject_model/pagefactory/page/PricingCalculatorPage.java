@@ -10,53 +10,47 @@ import java.time.Duration;
 
 public class PricingCalculatorPage {
     WebDriver webDriver;
-    @FindBy(xpath = "//*[@id='tab-item-1']")
-    WebElement computeEngineButton;
-    @FindBy(xpath = "//*[@id='input_100']")
+    @FindBy(xpath = "//*[@id='c11']")
     WebElement numberOfInstancesInput;
-    @FindBy(xpath = "//*[@id='select_113']")
+    @FindBy(xpath = "//span[contains(text(), 'Operating System / Software')]/ancestor::div[2]")
     WebElement operationSystemSoftwareInput;
-    @FindBy(xpath = "//*[@id='select_117']")
     WebElement provisioningModelInput;
-    @FindBy(xpath = "//*[@id='select_123']")
+    @FindBy(xpath = "//span[contains(text(), 'Machine Family')]/ancestor::div[2]")
     WebElement machineFamilyInput;
-    @FindBy(xpath = "//*[@id='select_125']")
+    @FindBy(xpath = "//span[contains(text(), 'Series')]/ancestor::div[2]")
     WebElement seriesInput;
-    @FindBy(xpath = "//*[@id='select_127']")
+    @FindBy(xpath = "//span[contains(text(), 'Machine type')]/ancestor::div[2]")
     WebElement machineTypeInput;
-    @FindBy(xpath = "//md-checkbox[contains(@aria-label, 'Add GPUs')]")
+    @FindBy(xpath = "//button[contains(@aria-label, 'Add GPUs')]/ancestor::div[4]")
     WebElement addGPUsInput;
-    @FindBy(xpath = "//*[@id='select_510']")
+    @FindBy(xpath = "//span[contains(text(), 'GPU Model')]/ancestor::div[2]")
     WebElement GPUTypeInput;
-    @FindBy(xpath = "//*[@id='select_512']")
+    @FindBy(xpath = "//span[contains(text(), 'Number of GPUs')]/ancestor::div[2]")
     WebElement numberOfGPUsInput;
-    @FindBy(xpath = "//*[@id='select_469']")
+    @FindBy(xpath = "//span[contains(text(), 'Local SSD')]/ancestor::div[2]")
     WebElement localSSDInput;
-    @FindBy(xpath = "//*[@id='select_133']")
+    @FindBy(xpath = "//span[contains(text(), 'Region')]/ancestor::div[2]")
     WebElement datacenterLocationInput;
-    @FindBy(xpath = "//*[@id='select_140']")
+
     WebElement committedUsageInput;
 
-    @FindBy(xpath = "//button[contains(text(), 'Add to Estimate')]")
+    @FindBy(xpath = "//span[contains(text(), 'Add to estimate')]/ancestor::button")
     WebElement addToEstimateButton;
 
-    @FindBy(xpath = "//*[@id='resultBlock']")
+    @FindBy(xpath = "//h2[contains(text(), 'Cost details')]/ancestor::div[2]")
     WebElement resultBlock;
+    @FindBy(xpath = "//button[contains(@aria-label, 'Open Share Estimate dialog')]")
+    WebElement openShareEstimate;
+    @FindBy(xpath = "//a[contains(@track-name, 'open estimate summary')]")
+    WebElement openEstimateSummary;
+    @FindBy(xpath = "//div[contains(@aria-label, 'Share Estimate Dialog')]")
+    WebElement shareEstimateDialog;
+    @FindBy(xpath = "//div[contains(text(), 'Estimated cost')]/following-sibling::div/label")
+    WebElement estimatedCostLabel;
 
     public PricingCalculatorPage(WebDriver webDriver) {
         this.webDriver = webDriver;
         PageFactory.initElements(webDriver, this);
-    }
-
-    public PricingCalculatorPage clickComputeEngine() {
-        webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-        webDriver.switchTo().frame(0);
-        webDriver.switchTo().frame("myFrame");
-
-        new WebDriverWait(webDriver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.elementToBeClickable(computeEngineButton))
-                .click();
-        return this;
     }
 
     public void fillComputeEngineForm(int numberOfInstances, String operationSystemSoftware, String provisioningModel, String machineFamily,
@@ -64,32 +58,40 @@ public class PricingCalculatorPage {
                                       String datacenterLocation, String committedUsage) {
         new WebDriverWait(webDriver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.visibilityOf(numberOfInstancesInput));
+        numberOfInstancesInput.clear();
         numberOfInstancesInput.sendKeys(String.valueOf(numberOfInstances));
 
         new WebDriverWait(webDriver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.visibilityOf(operationSystemSoftwareInput));
-        operationSystemSoftwareInput.sendKeys(operationSystemSoftware);
-        operationSystemSoftwareInput.sendKeys(Keys.ENTER);
+                .until(ExpectedConditions.elementToBeClickable(operationSystemSoftwareInput))
+                .click();
+        new WebDriverWait(webDriver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[contains(text(), '"+ operationSystemSoftware +"')]/ancestor::li")))
+                .click();
+
+        provisioningModelInput =new WebDriverWait(webDriver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.elementToBeClickable(By.xpath("//label[contains(text(), '"+provisioningModel+"')]/parent::*")));
+        provisioningModelInput.click();
 
         new WebDriverWait(webDriver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.visibilityOf(provisioningModelInput));
-        provisioningModelInput.sendKeys(provisioningModel);
-        provisioningModelInput.sendKeys(Keys.ENTER);
+                .until(ExpectedConditions.elementToBeClickable(machineFamilyInput))
+                .click();
+        new WebDriverWait(webDriver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.elementToBeClickable(By.xpath("//span[contains(text(), '"+machineFamily+"')]/ancestor::li")))
+                .click();
 
         new WebDriverWait(webDriver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.visibilityOf(machineFamilyInput));
-        machineFamilyInput.sendKeys(machineFamily);
-        machineFamilyInput.sendKeys(Keys.ENTER);
+                .until(ExpectedConditions.elementToBeClickable(seriesInput))
+                .click();
+        new WebDriverWait(webDriver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.elementToBeClickable(By.xpath("//span[contains(text(), '"+series+"')]/ancestor::li")))
+                .click();
 
         new WebDriverWait(webDriver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.visibilityOf(seriesInput));
-        seriesInput.sendKeys(series);
-        seriesInput.sendKeys(Keys.ENTER);
-
+                .until(ExpectedConditions.elementToBeClickable(machineTypeInput))
+                .click();
         new WebDriverWait(webDriver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.visibilityOf(machineTypeInput));
-        machineTypeInput.sendKeys(machineType);
-        machineTypeInput.sendKeys(Keys.ENTER);
+                .until(ExpectedConditions.elementToBeClickable(By.xpath("//span[contains(text(), '"+machineType+"')]/ancestor::li")))
+                .click();
 
         if(addGPUs) {
             new WebDriverWait(webDriver, Duration.ofSeconds(10))
@@ -97,31 +99,41 @@ public class PricingCalculatorPage {
             addGPUsInput.click();
 
             new WebDriverWait(webDriver, Duration.ofSeconds(10))
-                    .until(ExpectedConditions.visibilityOf(GPUTypeInput));
-            GPUTypeInput.sendKeys(GPUType);
-            GPUTypeInput.sendKeys(Keys.ENTER);
+                    .until(ExpectedConditions.elementToBeClickable(GPUTypeInput))
+                    .click();
+            new WebDriverWait(webDriver, Duration.ofSeconds(10))
+                    .until(ExpectedConditions.elementToBeClickable(By.xpath("//span[contains(text(), '"+GPUType+"')]/ancestor::li")))
+                    .click();
 
             new WebDriverWait(webDriver, Duration.ofSeconds(10))
-                    .until(ExpectedConditions.visibilityOf(numberOfGPUsInput));
-            numberOfGPUsInput.sendKeys(String.valueOf(numberOfGPUs));
+                    .until(ExpectedConditions.elementToBeClickable(numberOfGPUsInput))
+                    .click();
+            new WebDriverWait(webDriver, Duration.ofSeconds(10))
+                    .until(ExpectedConditions.elementToBeClickable(By.xpath("//ul[contains(@aria-label, 'Number of GPUs')]//li[contains(@data-value, '"+numberOfInstances+"')]")))
+                    .click();
         }
+        new WebDriverWait(webDriver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.elementToBeClickable(localSSDInput))
+                .click();
+        new WebDriverWait(webDriver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.elementToBeClickable(By.xpath("//span[contains(text(), '"+localSSD+"')]/ancestor::li")))
+                .click();
 
         new WebDriverWait(webDriver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.visibilityOf(localSSDInput));
-        localSSDInput.sendKeys(localSSD);
-        localSSDInput.sendKeys(Keys.ENTER);
+                .until(ExpectedConditions.elementToBeClickable(datacenterLocationInput))
+                .click();
+        new WebDriverWait(webDriver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.elementToBeClickable(By.xpath("//span[contains(text(), '"+datacenterLocation+"')]/ancestor::li")))
+                .click();
+
 
         new WebDriverWait(webDriver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.visibilityOf(datacenterLocationInput));
-        datacenterLocationInput.sendKeys(datacenterLocation);
-        datacenterLocationInput.sendKeys(Keys.ENTER);
-
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[contains(text(), '"+committedUsage+"')]/ancestor::div[1]")));
         new WebDriverWait(webDriver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.visibilityOf(committedUsageInput));
-        committedUsageInput.sendKeys(committedUsage);
-        committedUsageInput.sendKeys(Keys.ENTER);
-
-        addToEstimate();
+                .until(ExpectedConditions.elementToBeClickable(By.xpath("//label[contains(text(), '"+committedUsage+"')]/ancestor::div[1]")))
+                .click();
+        new WebDriverWait(webDriver, Duration.ofSeconds(5))
+                .until(ExpectedConditions.textToBe(By.xpath("//div[contains(text(), 'Estimated cost')]/following-sibling::div/label"), "$19,096.38"));
     }
 
     public void addToEstimate() {
@@ -130,55 +142,29 @@ public class PricingCalculatorPage {
                 .click();
     }
 
-    public boolean openEstimateSummary() {
+    public boolean openEstimateShare() {
         try {
+            JavascriptExecutor js = (JavascriptExecutor) webDriver;
+            js.executeScript("arguments[0].scrollIntoView(true);" + "window.scrollBy(0,-300);", openShareEstimate);
             new WebDriverWait(webDriver, Duration.ofSeconds(10))
-                    .until(ExpectedConditions.visibilityOf(resultBlock));
+                    .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[contains(@aria-label, 'Open Share Estimate dialog')]")));
+            new WebDriverWait(webDriver, Duration.ofSeconds(10))
+                    .until((ExpectedConditions.elementToBeClickable(openShareEstimate)))
+                    .click();
             return true;
         }catch (NoSuchElementException e){
             System.out.println(e.getMessage());
             return false;
         }
     }
-
-    public String getCostEstimateSummary() {
-        return new WebDriverWait(webDriver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//md-content/md-card//h2/b")))
-                .getText().strip();
-    }
-    public String getNumberOfInstances(){
-        return new WebDriverWait(webDriver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//md-content/md-list/div/div[1]//span")))
-                .getText().strip();
-    }
-    public String getOperationSystemSoftware(){
-        return new WebDriverWait(webDriver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//md-content/md-list/md-list-item[6]//span")))
-                .getText().strip();
-    }
-    public String getProvisioningModel(){
-        return new WebDriverWait(webDriver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//md-content/md-list/md-list-item[4]/div[1]")))
-                .getText().strip();
-    }
-    public String getMachineType(){
-        return new WebDriverWait(webDriver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//md-content/md-list/md-list-item[5]/div[1]")))
-                .getText().strip();
-    }
-    public String getLocalSSD(){
-        return new WebDriverWait(webDriver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//md-content/md-list/md-list-item[7]/div[1]")))
-                .getText().strip();
-    }
-    public String getDatacenterLocation(){
-        return new WebDriverWait(webDriver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//md-content/md-list/md-list-item[1]/div[1]")))
-                .getText().strip();
-    }
-    public String getCommittedUsage(){
-        return new WebDriverWait(webDriver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//md-content/md-list/md-list-item[3]/div[1]")))
-                .getText().strip();
+    public EstimateSummaryPage openEstimateSummary() {
+        webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+        new WebDriverWait(webDriver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//a[contains(@track-name, 'open estimate summary')]")));
+        new WebDriverWait(webDriver, Duration.ofSeconds(10))
+                .until((ExpectedConditions.elementToBeClickable(openEstimateSummary)))
+                .click();
+        return new EstimateSummaryPage(webDriver);
     }
 }
+
