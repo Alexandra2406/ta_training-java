@@ -14,6 +14,12 @@ public class EstimateSummaryPage {
         this.webDriver = webDriver;
         PageFactory.initElements(webDriver, this);
     }
+    public EstimateSummaryPage switchToNewWindow(){
+        for(String winHandle : webDriver.getWindowHandles()){
+            webDriver.switchTo().window(winHandle);
+        }
+        return this;
+    }
     public String getCostEstimateSummary() {
         return new WebDriverWait(webDriver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h5[contains(text(), 'Total estimated cost')]/following-sibling::h4")))
@@ -52,6 +58,16 @@ public class EstimateSummaryPage {
     public String getCommittedUsage(){
         return new WebDriverWait(webDriver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(text(), 'Committed use discount options')]/following-sibling::span")))
+                .getText().strip();
+    }
+    public String getNumberOfGPUs(){
+        return new WebDriverWait(webDriver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(text(), 'Number of GPUs')]/following-sibling::span")))
+                .getText().strip();
+    }
+    public String getGPUModel(){
+        return new WebDriverWait(webDriver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(text(), 'GPU Model')]/following-sibling::span")))
                 .getText().strip();
     }
 }

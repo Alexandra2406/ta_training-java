@@ -55,7 +55,7 @@ public class PricingCalculatorPage {
 
     public void fillComputeEngineForm(int numberOfInstances, String operationSystemSoftware, String provisioningModel, String machineFamily,
                                       String series, String machineType, boolean addGPUs, String GPUType, int numberOfGPUs, String localSSD,
-                                      String datacenterLocation, String committedUsage) {
+                                      String datacenterLocation, String committedUsage, String cost) {
         new WebDriverWait(webDriver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.visibilityOf(numberOfInstancesInput));
         numberOfInstancesInput.clear();
@@ -109,7 +109,7 @@ public class PricingCalculatorPage {
                     .until(ExpectedConditions.elementToBeClickable(numberOfGPUsInput))
                     .click();
             new WebDriverWait(webDriver, Duration.ofSeconds(10))
-                    .until(ExpectedConditions.elementToBeClickable(By.xpath("//ul[contains(@aria-label, 'Number of GPUs')]//li[contains(@data-value, '"+numberOfInstances+"')]")))
+                    .until(ExpectedConditions.elementToBeClickable(By.xpath("//ul[contains(@aria-label, 'Number of GPUs')]//li[contains(@data-value, '"+numberOfGPUs+"')]")))
                     .click();
         }
         new WebDriverWait(webDriver, Duration.ofSeconds(10))
@@ -133,7 +133,7 @@ public class PricingCalculatorPage {
                 .until(ExpectedConditions.elementToBeClickable(By.xpath("//label[contains(text(), '"+committedUsage+"')]/ancestor::div[1]")))
                 .click();
         new WebDriverWait(webDriver, Duration.ofSeconds(5))
-                .until(ExpectedConditions.textToBe(By.xpath("//div[contains(text(), 'Estimated cost')]/following-sibling::div/label"), "$19,096.38"));
+                .until(ExpectedConditions.textToBe(By.xpath("//div[contains(text(), 'Estimated cost')]/following-sibling::div/label"), cost));
     }
 
     public void addToEstimate() {

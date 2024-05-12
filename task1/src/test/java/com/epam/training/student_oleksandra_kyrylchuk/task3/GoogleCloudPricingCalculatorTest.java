@@ -5,9 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import pageobject_model.pagefactory.page.*;
 
 
@@ -15,12 +13,25 @@ public class GoogleCloudPricingCalculatorTest {
     WebDriver driver;
     PricingCalculatorPage pricingCalculatorPage;
     EstimateSummaryPage estimateSummaryPage;
+    @DataProvider(name = "testData")
+    public Object[][] testData() {
+        return new Object[][] {
+                {4, "Free: Debian, CentOS, CoreOS, Ubuntu or BYOL (Bring Your Own License)",
+                        "Regular", "General Purpose", "N1", "n1-standard-8, vCPUs: 8, RAM: 30 GB", true, "NVIDIA Tesla V100", 1,
+                        "2x375 GB", "South Carolina (us-east1)", "1 year", "$5,413.26", "n1-standard-8"}
+        };
+    }
     @BeforeTest(description = "Google Cloud Pricing Calculator Initializing")
     private void setUp(){
         FirefoxOptions firefoxOptions = new FirefoxOptions();
         firefoxOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
         driver = new FirefoxDriver(firefoxOptions);
-
+    }
+    @Test(priority = 0, description = "Google Cloud Pricing Calculator Testing", dataProvider = "testData")
+    public void testGoogleCloudPricingCalculatorSetUp(int numberOfInstances, String operationSystemSoftware,
+                                                 String provisioningModel, String machineFamily, String series,
+                                                 String machineType, boolean addGPUs, String GPUType, int numberOfGPUs,
+                                                 String localSSD, String datacenterLocation, String committedUsage, String cost, String machineTypeSetUp) {
         GoogleCloudHomePage googleCloudHomePage = new GoogleCloudHomePage(driver);
         googleCloudHomePage.openPage();
         googleCloudHomePage.clickSearchIcon();
@@ -30,41 +41,32 @@ public class GoogleCloudPricingCalculatorTest {
         welcomePricingCalculatorPage.addToEstimateClick();
         pricingCalculatorPage = welcomePricingCalculatorPage.computeEngineClick();
 
-        int numberOfInstances = 4;
-        String operationSystemSoftware = "Free: Debian, CentOS, CoreOS, Ubuntu or BYOL (Bring Your Own License)";
-        String provisioningModel = "Regular";
-        String machineFamily = "General Purpose";
-        String series = "N1";
-        String machineType = "n1-standard-8";
-        boolean addGPUs = true;
-        String GPUType = "NVIDIA Tesla V100";
-        int numberOfGPUs = 1;
-        String localSSD = "2x375 GB";
-        String datacenterLocation = "South Carolina (us-east1)"; //There was no opportunity to choose Frankfurt
-        String committedUsage = "1 year";
-
         pricingCalculatorPage.fillComputeEngineForm(numberOfInstances, operationSystemSoftware, provisioningModel, machineFamily,
-                series, machineType, addGPUs, GPUType, numberOfGPUs, localSSD, datacenterLocation, committedUsage);
+                series, machineTypeSetUp, addGPUs, GPUType, numberOfGPUs, localSSD, datacenterLocation, committedUsage, cost);
         pricingCalculatorPage.openEstimateShare();
         estimateSummaryPage = pricingCalculatorPage.openEstimateSummary();
     }
-    @Test(description = "Google Cloud Pricing Calculator Testing")
-    public void testGoogleCloudPricingCalculator() {
-        for(String winHandle : driver.getWindowHandles()){
-            driver.switchTo().window(winHandle);
-        }
-        Assert.assertEquals(estimateSummaryPage.getCostEstimateSummary(), "$19,096.38");
-        Assert.assertEquals(estimateSummaryPage.getLocalSSD(), "2x375 GB");
-        Assert.assertEquals(estimateSummaryPage.getCommittedUsage(), "1 year");
-        Assert.assertEquals(estimateSummaryPage.getMachineType(), "n1-standard-8, vCPUs: 8, RAM: 30 GB");
-        Assert.assertEquals(estimateSummaryPage.getNumberOfInstances(), "4");
-        Assert.assertEquals(estimateSummaryPage.getDatacenterLocation(), "South Carolina (us-east1)");
-        Assert.assertEquals(estimateSummaryPage.getProvisioningModel(), "Regular");
-        Assert.assertEquals(estimateSummaryPage.getOperationSystemSoftware(), "Free: Debian, CentOS, CoreOS, Ubuntu or BYOL (Bring Your Own License)");
+    @Test(priority = 1, description = "Google Cloud Pricing Calculator Testing", dataProvider = "testData")
+    public void testGoogleCloudPricingCalculator(int numberOfInstances, String operationSystemSoftware,
+                                                 String provisioningModel, String machineFamily, String series,
+                                                 String machineType, boolean addGPUs, String GPUType, int numberOfGPUs,
+                                                 String localSSD, String datacenterLocation, String committedUsage, String cost, String machineTypeSetUp) {
+        estimateSummaryPage.switchToNewWindow();
+        Assert.assertEquals(estimateSummaryPage.getCostEstimateSummary(), cost);
+        Assert.assertEquals(estimateSummaryPage.getLocalSSD(), localSSD);
+        Assert.assertEquals(estimateSummaryPage.getCommittedUsage(), committedUsage);
+        Assert.assertEquals(estimateSummaryPage.getMachineType(), machineType);
+        Assert.assertEquals(estimateSummaryPage.getNumberOfInstances(), String.valueOf(numberOfInstances));
+        Assert.assertEquals(estimateSummaryPage.getNumberOfGPUs(), String.valueOf(numberOfGPUs));
+        Assert.assertEquals(estimateSummaryPage.getGPUModel(), GPUType);
+        Assert.assertEquals(estimateSummaryPage.getDatacenterLocation(), datacenterLocation);
+        Assert.assertEquals(estimateSummaryPage.getProvisioningModel(), provisioningModel);
+        Assert.assertEquals(estimateSummaryPage.getOperationSystemSoftware(), operationSystemSoftware);
     }
-    @AfterMethod(alwaysRun = true)
+    @AfterSuite(alwaysRun = true)
     public void browserTearDown(){
         driver.quit();
         driver = null;
     }
+
 }
