@@ -32,21 +32,10 @@ public class PricingCalculatorPage {
     @FindBy(xpath = "//span[contains(text(), 'Region')]/ancestor::div[2]")
     WebElement datacenterLocationInput;
 
-    WebElement committedUsageInput;
-
-    @FindBy(xpath = "//span[contains(text(), 'Add to estimate')]/ancestor::button")
-    WebElement addToEstimateButton;
-
-    @FindBy(xpath = "//h2[contains(text(), 'Cost details')]/ancestor::div[2]")
-    WebElement resultBlock;
     @FindBy(xpath = "//button[contains(@aria-label, 'Open Share Estimate dialog')]")
     WebElement openShareEstimate;
     @FindBy(xpath = "//a[contains(@track-name, 'open estimate summary')]")
     WebElement openEstimateSummary;
-    @FindBy(xpath = "//div[contains(@aria-label, 'Share Estimate Dialog')]")
-    WebElement shareEstimateDialog;
-    @FindBy(xpath = "//div[contains(text(), 'Estimated cost')]/following-sibling::div/label")
-    WebElement estimatedCostLabel;
 
     public PricingCalculatorPage(WebDriver webDriver) {
         this.webDriver = webDriver;
@@ -134,12 +123,6 @@ public class PricingCalculatorPage {
                 .click();
         new WebDriverWait(webDriver, Duration.ofSeconds(5))
                 .until(ExpectedConditions.textToBe(By.xpath("//div[contains(text(), 'Estimated cost')]/following-sibling::div/label"), cost));
-    }
-
-    public void addToEstimate() {
-        new WebDriverWait(webDriver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.elementToBeClickable(addToEstimateButton))
-                .click();
     }
 
     public boolean openEstimateShare() {

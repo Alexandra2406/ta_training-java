@@ -6,8 +6,6 @@ import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-import pageobject_model.pagefactory.page.GoogleCloudHomePage;
-import pageobject_model.pagefactory.page.GoogleCloudSearchPage;
 import pageobject_model.pagefactory.page.PricingCalculatorPageLegacy;
 
 public class GoogleCloudPricingCalculatorLegacyTest {
@@ -16,13 +14,6 @@ public class GoogleCloudPricingCalculatorLegacyTest {
     @BeforeTest(description = "Google Cloud Pricing Calculator Legacy Initializing")
     private void fillComputeEngineForm(){
         driver = new FirefoxDriver();
-
-        /*GoogleCloudHomePage googleCloudHomePage = new GoogleCloudHomePage(driver);
-        googleCloudHomePage.openPage();
-        googleCloudHomePage.clickSearchIcon();
-        String query = "Google Cloud Pricing Calculator";
-        GoogleCloudSearchPage googleCloudSearchPage = googleCloudHomePage.searchQuery(query);
-        PricingCalculatorPageLegacy pricingCalculatorPage = googleCloudSearchPage.openPricingCalculatorPageLegacy(query);*/
         pricingCalculatorPage = new PricingCalculatorPageLegacy(driver);
         pricingCalculatorPage.openPage();
         pricingCalculatorPage.clickComputeEngine();

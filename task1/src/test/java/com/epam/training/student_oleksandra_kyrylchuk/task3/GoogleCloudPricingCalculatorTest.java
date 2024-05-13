@@ -1,5 +1,6 @@
 package com.epam.training.student_oleksandra_kyrylchuk.task3;
 
+import com.epam.training.student_oleksandra_kyrylchuk.task3.data.PricingCalculatorTestData;
 import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -14,11 +15,11 @@ public class GoogleCloudPricingCalculatorTest {
     PricingCalculatorPage pricingCalculatorPage;
     EstimateSummaryPage estimateSummaryPage;
     @DataProvider(name = "testData")
-    public Object[][] testData() {
-        return new Object[][] {
-                {4, "Free: Debian, CentOS, CoreOS, Ubuntu or BYOL (Bring Your Own License)",
+    public Object[] testData() {
+        return new PricingCalculatorTestData[]{
+               new PricingCalculatorTestData(4, "Free: Debian, CentOS, CoreOS, Ubuntu or BYOL (Bring Your Own License)",
                         "Regular", "General Purpose", "N1", "n1-standard-8, vCPUs: 8, RAM: 30 GB", true, "NVIDIA Tesla V100", 1,
-                        "2x375 GB", "South Carolina (us-east1)", "1 year", "$5,413.26", "n1-standard-8"}
+                        "2x375 GB", "South Carolina (us-east1)", "1 year", "$5,413.26", "n1-standard-8")
         };
     }
     @BeforeTest(description = "Google Cloud Pricing Calculator Initializing")
@@ -27,11 +28,8 @@ public class GoogleCloudPricingCalculatorTest {
         firefoxOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
         driver = new FirefoxDriver(firefoxOptions);
     }
-    @Test(priority = 0, description = "Google Cloud Pricing Calculator Testing", dataProvider = "testData")
-    public void testGoogleCloudPricingCalculatorSetUp(int numberOfInstances, String operationSystemSoftware,
-                                                 String provisioningModel, String machineFamily, String series,
-                                                 String machineType, boolean addGPUs, String GPUType, int numberOfGPUs,
-                                                 String localSSD, String datacenterLocation, String committedUsage, String cost, String machineTypeSetUp) {
+    @Test(description = "Google Cloud Pricing Calculator Testing", dataProvider = "testData")
+    public void testGoogleCloudPricingCalculatorSetUp(PricingCalculatorTestData pricingCalculatorTD) {
         GoogleCloudHomePage googleCloudHomePage = new GoogleCloudHomePage(driver);
         googleCloudHomePage.openPage();
         googleCloudHomePage.clickSearchIcon();
@@ -41,27 +39,27 @@ public class GoogleCloudPricingCalculatorTest {
         welcomePricingCalculatorPage.addToEstimateClick();
         pricingCalculatorPage = welcomePricingCalculatorPage.computeEngineClick();
 
-        pricingCalculatorPage.fillComputeEngineForm(numberOfInstances, operationSystemSoftware, provisioningModel, machineFamily,
-                series, machineTypeSetUp, addGPUs, GPUType, numberOfGPUs, localSSD, datacenterLocation, committedUsage, cost);
+        pricingCalculatorPage.fillComputeEngineForm(pricingCalculatorTD.getNumberOfInstances(), pricingCalculatorTD.getOperationSystemSoftware(),
+                pricingCalculatorTD.getProvisioningModel(), pricingCalculatorTD.getMachineFamily(), pricingCalculatorTD.getSeries(),
+                pricingCalculatorTD.getMachineTypeSetUp(), pricingCalculatorTD.isAddGPUs(), pricingCalculatorTD.getGPUType(),
+                pricingCalculatorTD.getNumberOfGPUs(), pricingCalculatorTD.getLocalSSD(), pricingCalculatorTD.getDatacenterLocation(),
+                pricingCalculatorTD.getCommittedUsage(), pricingCalculatorTD.getCost());
         pricingCalculatorPage.openEstimateShare();
         estimateSummaryPage = pricingCalculatorPage.openEstimateSummary();
     }
     @Test(priority = 1, description = "Google Cloud Pricing Calculator Testing", dataProvider = "testData")
-    public void testGoogleCloudPricingCalculator(int numberOfInstances, String operationSystemSoftware,
-                                                 String provisioningModel, String machineFamily, String series,
-                                                 String machineType, boolean addGPUs, String GPUType, int numberOfGPUs,
-                                                 String localSSD, String datacenterLocation, String committedUsage, String cost, String machineTypeSetUp) {
+    public void testGoogleCloudPricingCalculator(PricingCalculatorTestData pricingCalculatorTD) {
         estimateSummaryPage.switchToNewWindow();
-        Assert.assertEquals(estimateSummaryPage.getCostEstimateSummary(), cost);
-        Assert.assertEquals(estimateSummaryPage.getLocalSSD(), localSSD);
-        Assert.assertEquals(estimateSummaryPage.getCommittedUsage(), committedUsage);
-        Assert.assertEquals(estimateSummaryPage.getMachineType(), machineType);
-        Assert.assertEquals(estimateSummaryPage.getNumberOfInstances(), String.valueOf(numberOfInstances));
-        Assert.assertEquals(estimateSummaryPage.getNumberOfGPUs(), String.valueOf(numberOfGPUs));
-        Assert.assertEquals(estimateSummaryPage.getGPUModel(), GPUType);
-        Assert.assertEquals(estimateSummaryPage.getDatacenterLocation(), datacenterLocation);
-        Assert.assertEquals(estimateSummaryPage.getProvisioningModel(), provisioningModel);
-        Assert.assertEquals(estimateSummaryPage.getOperationSystemSoftware(), operationSystemSoftware);
+        Assert.assertEquals(estimateSummaryPage.getCostEstimateSummary(), pricingCalculatorTD.getCost());
+        Assert.assertEquals(estimateSummaryPage.getLocalSSD(), pricingCalculatorTD.getLocalSSD());
+        Assert.assertEquals(estimateSummaryPage.getCommittedUsage(), pricingCalculatorTD.getCommittedUsage());
+        Assert.assertEquals(estimateSummaryPage.getMachineType(), pricingCalculatorTD.getMachineType());
+        Assert.assertEquals(estimateSummaryPage.getNumberOfInstances(), String.valueOf(pricingCalculatorTD.getNumberOfInstances()));
+        Assert.assertEquals(estimateSummaryPage.getNumberOfGPUs(), String.valueOf(pricingCalculatorTD.getNumberOfGPUs()));
+        Assert.assertEquals(estimateSummaryPage.getGPUModel(), pricingCalculatorTD.getGPUType());
+        Assert.assertEquals(estimateSummaryPage.getDatacenterLocation(), pricingCalculatorTD.getDatacenterLocation());
+        Assert.assertEquals(estimateSummaryPage.getProvisioningModel(), pricingCalculatorTD.getProvisioningModel());
+        Assert.assertEquals(estimateSummaryPage.getOperationSystemSoftware(), pricingCalculatorTD.getOperationSystemSoftware());
     }
     @AfterSuite(alwaysRun = true)
     public void browserTearDown(){
