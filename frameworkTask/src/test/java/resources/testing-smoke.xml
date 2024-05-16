@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Smoke" verbose="1">
+    <test name="Page access">
+        <classes>
+            <class name="com.epam.training.student_oleksandra_kyrylchuk.test.SmokeTest"/>
+        </classes>
+    </test>
+</suite>
