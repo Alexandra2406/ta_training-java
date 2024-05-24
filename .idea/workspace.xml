@@ -4,18 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7c603acc-3658-4421-9877-1ccfdf109711" name="Changes" comment="task3 update">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frameworkTask/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task1/src/test/java/com/epam/training/student_oleksandra_kyrylchuk/task3/data/PricingCalculatorTestData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task1/src/test/java/com/epam/training/student_oleksandra_kyrylchuk/task3/GoogleCloudPricingCalculatorLegacyTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/task1/src/test/java/com/epam/training/student_oleksandra_kyrylchuk/task3/GoogleCloudPricingCalculatorLegacyTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task1/src/test/java/com/epam/training/student_oleksandra_kyrylchuk/task3/GoogleCloudPricingCalculatorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/task1/src/test/java/com/epam/training/student_oleksandra_kyrylchuk/task3/GoogleCloudPricingCalculatorTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task1/src/test/java/pageobject_model/pagefactory/page/GoogleCloudHomePage.java" beforeDir="false" afterPath="$PROJECT_DIR$/task1/src/test/java/pageobject_model/pagefactory/page/GoogleCloudHomePage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task1/src/test/java/pageobject_model/pagefactory/page/PricingCalculatorPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/task1/src/test/java/pageobject_model/pagefactory/page/PricingCalculatorPage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task1/src/test/java/pageobject_model/pagefactory/page/WelcomePricingCalculatorPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/task1/src/test/java/pageobject_model/pagefactory/page/WelcomePricingCalculatorPage.java" afterDir="false" />
-    </list>
+    <list default="true" id="7c603acc-3658-4421-9877-1ccfdf109711" name="Changes" comment="task3 update" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -93,6 +82,7 @@
       <updated>1714684667712</updated>
       <workItem from="1714684668702" duration="809000" />
       <workItem from="1715159381436" duration="9674000" />
+      <workItem from="1716390877322" duration="19000" />
     </task>
     <task id="LOCAL-00001" summary="update task1 and task2">
       <created>1715287310561</created>
